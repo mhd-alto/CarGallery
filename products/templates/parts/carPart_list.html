@@ -1,0 +1,124 @@
+{% extends 'products_layout.html' %}
+{% load static %}
+
+{% block title %}
+CarParts    
+{% endblock title %}
+    
+
+{% block content %}
+<section id="portfolio" class="portfolio">
+    <div class="container">
+
+        <section id="breadcrumbs" class="breadcrumbs">
+            <div class="container">
+      
+              <ol>
+                <li><a href="{% url 'index' %}">Home</a></li>
+                <li>Car Parts</li>
+              </ol>
+              <h2>Cars Parts</h2>
+      
+            </div>
+          </section>
+          <div class="row ">
+            <form action="" method="post">
+              {% csrf_token %}
+              <div class="input-group">
+                <span class="m-1 w-50">{{carPartFilter.form.search}}</span>
+                <span class="mx-5 m-1">
+                {{carPartFilter.form.price}}
+  
+                </span>
+                <input type="submit" class="btn btn-primary" value="&#128269">
+  
+              </div>
+              <!-- <div class="input-group">
+                <div class="">
+                  <input type="text" class="form-control" name="search">
+                </div>
+                
+              </div> -->
+              </form>
+              <form action="{% url 'carPart_list' %}" class="form" method="post">
+                {% csrf_token %}
+                
+                <div class="row m-1">
+                  Or Search by
+                    brand: &nbsp;
+                    <select name="brand" class="form-control w-25 " onchange="this.form.submit()">
+                      <option value="none" selected disabled>None</option>
+                      {% for car in brands  %}
+                        <option value="{{car.id}}">{{car.brand}}</option>
+                      {% endfor %}  
+                    </select>
+                  </div>
+              </form>
+          </div>
+      <div class="section-title">
+        <span>Car Parts</span>
+        <h2>Car Parts</h2>
+        <p>We offer you many type of Car Parts from multiple company </p>
+      </div>
+
+
+      <div class="row portfolio-container" data-aos="fade-up" data-aos-delay="150">
+
+        {% for carPart in carParts %}
+        <div class="col-lg-4 col-md-6 portfolio-item filter-app">
+          <img src="{{carPart.image.url}}" class="img-fluid" alt="">
+          <div class="portfolio-info">
+            
+            <a href="{% url 'carPart_details' carPart.id %}">
+              <h4>{{carPart.title}}</h4>   
+              <p class="text-secondry">
+                    <img src="{{carPart.author.company_logo.url}}" width="25" class="rounded-circle" alt="">
+                    
+                    {{carPart.author}}</p>
+            <span class="float-end">Total Likes:{{carPart.likes.count}}</span>
+
+            
+            </a>
+          </div>
+        </div>
+        {%empty%}
+        no carPart like this
+        {% endfor %}
+            
+
+
+      </div>
+
+    </div>
+    {% if recParts %}
+    <div class="d-flex">
+      <hr>
+      <div class="mx-auto m-4 ">
+        <h4 class="text-danger">Recommanded Parts for you</h4>
+      </div>
+
+    </div>
+    <div class="row  row-cols-1 row-cols-md-2 row-cols-lg-3 g-3">
+      {% for car in recParts %}
+      <div class="col">
+        <div class="card">
+          <img src="{{car.image.url}}" class="card-img-top" alt="">
+          <a href="{% url 'car_details' car.id %}">
+          <div class="card-body">
+            <h5 class="card-title fw-bold text-dark">{{car.title}}</h5>
+            <p class="text-dark h6">{{car.author}}</p>
+            <span class="float-end">Total Likes:{{car.likes.count}}</span>
+          </div>
+        </a>
+        </div>
+      </div>
+      {% endfor %}
+      
+
+      
+    </div>
+    {% endif %}
+  </section>
+
+{% endblock content %}
+    

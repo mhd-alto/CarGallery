@@ -1,0 +1,16 @@
+{% extends 'manage/manage_layout.html' %}
+{% load static %}
+
+{% block title %}
+    Add Car
+{% endblock title %}
+    
+
+{% block content %}
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{form.as_p}}
+        <button type="submit" class="btn btn-primary">save</button>
+    </form>
+{% endblock content %}
+    

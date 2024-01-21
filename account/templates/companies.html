@@ -1,0 +1,48 @@
+{% extends 'products_layout.html' %}
+
+
+{% block title %}
+    Companies
+{% endblock title %}
+    
+
+{% block content %}
+<div class="row mb-5">
+    <div class="col-md-8 col-xl-6 text-center mx-auto">
+        <h2>Companies</h2>
+        <p class="w-lg-50">we try to offer best companies that suitable to you ! </p>
+    </div>
+</div>
+<form action="" method="post" class="mb-3">
+    {% csrf_token %}
+    <div class="input-group">
+    {{companyFilter.form.search}}
+
+      <input type="submit" class="btn btn-primary" value="&#128269">
+
+    </div>
+    <!-- <div class="input-group">
+      <div class="">
+        <input type="text" class="form-control" name="search">
+      </div>
+      
+    </div> -->
+    </form>
+<div class="row gy-4 row-cols-1 row-cols-md-2">
+    
+    {% for comp in companies %}
+    <div class="col">
+        <div class="d-flex flex-column flex-lg-row">
+            <div class="w-50"><img class="rounded img-fluid d-block w-100 fit-cover" style="height: 200px;" src="{{comp.company_logo.url}}"></div>
+            <div class="py-4 py-lg-0 px-lg-4">
+                <h4>{{comp.company_name}}</h4>
+                <p>{{comp.company_services}}</p>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+        
+    
+</div>
+{% endblock content %}
+    

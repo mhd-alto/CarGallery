@@ -1,0 +1,183 @@
+{% extends 'products_layout.html' %}
+{% load static %}
+
+
+{% block title %}
+{{carPart.title}}
+{% endblock title %}
+
+{% block content %}
+<section id="breadcrumbs" class="breadcrumbs">
+  <div class="container">
+
+    <ol>
+      <li><a href="{% url 'index' %}">Home</a></li>
+      <li>{{carPart.title}}</li>
+    </ol>
+    <h2>CarPart Details</h2>
+
+  </div>
+</section><!-- End Breadcrumbs -->
+
+<!-- ======= Portfolio Details Section ======= -->
+<section id="portfolio-details" class="portfolio-details">
+  <div class="container">
+
+    <div class="row gy-4">
+
+      <div class="col-lg-8">
+        <div class="portfolio-details-slider swiper">
+          <div class="swiper-wrapper align-items-center">
+
+            <div class="swiper-slide">
+              <img src="{{carPart.image.url}}" alt="">
+            </div>
+            <!-- 
+              <div class="swiper-slide">
+                <img src="assets/img/portfolio/portfolio-2.jpg" alt="">
+              </div>
+
+              <div class="swiper-slide">
+                <img src="assets/img/portfolio/portfolio-3.jpg" alt="">
+              </div> -->
+
+          </div>
+          <div class="swiper-pagination"></div>
+        </div>
+      </div>
+
+      <div class="col-lg-4">
+        <div class="portfolio-info">
+          <h3>CarPart information</h3>
+          <ul>
+            <li><strong>Company</strong>: 
+              <img src="{{carPart.author.company_logo.url}}" width="25" class="rounded-circle" alt="">
+              {{carPart.author}} 
+              <sub>
+                <button type="button" class="btn btn-outline-primary " data-bs-toggle="modal" data-bs-target="#exampleModal" style="transform:scale(0.6) ;">
+                  info
+                </button>
+              </sub>
+            </li>
+            <li><strong>brand</strong>: {{carPart.brand}}</li>
+            <li><strong>date</strong>: {{carPart.created}}</li>
+            <li><strong>price</strong>: {{carPart.price}}</li>
+            <li><strong>phonenumber</strong>: <a href="#" type="phonenumber">{{carPart.author.company_phonenumber}}</a>
+            </li>
+            <li><strong>company</strong>: {{carPart.author}}</li>
+          </ul>
+          <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    <center>
+                      <img src="{{carPart.author.company_logo.url}}" width="75" class="rounded-circle" alt="">
+                    
+                    <h5 class="modal-title" id="exampleModalLabel">
+                      {{carPart.author}}</h5>
+                      <div class="mt-3">
+                        {{carPart.author.company_services}}
+                        <hr>
+                        address: {{carPart.author.adderss}}
+                      </div>
+                    </center>
+            
+                  </div>
+                  <div class="modal-footer">
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
+        <hr>
+        {% if request.user.is_authenticated %}
+
+
+        <form action="{% url 'carPart_details' carPart.pk %}" method="post">
+          {% csrf_token %}
+          {% if liked == True %}
+          <button type="submit" class="btn btn-primary btn-sm" name="car_id" value="{{carPart.pk}}">
+            <i class="bi bi-heart"></i>like
+          </button>
+          {% else %}
+          <button type="submit" class="btn btn-outline-primary btn-sm" name="car_id" value="{{carPart.pk}}">
+            <i class="bi bi-heart"></i>like
+          </button>
+
+          {% endif %}
+          <span class="mx-5">Total Likes:</span><span class="text-primary">{{likesCount}}</span>
+
+        </form>
+        {% endif %}
+
+        <div class="portfolio-description">
+          <h2>description</h2>
+          <p>
+            {{carPart.description}}
+          </p>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</section><!-- End Portfolio Details Section -->
+<div class="row d-flex justify-content-center">
+  <div class="col-md-8 col-lg-6">
+    <div class="card shadow-0 border" style="background-color: #f0f2f5;">
+      <div class="card-body p-4">
+
+        {% if request.user.is_authenticated %}
+        <form action="{% url 'addCarPartComment' carPart.id %}" method="post">
+          <div class="form-outline mb-4">
+            {% csrf_token %}
+            {{form.as_p}}
+            <input type="submit" value="Add comment">
+          </div>
+        </form>
+        {% endif %}
+
+
+
+        <div style="overflow-y:scroll; height:250px;">
+          {% for i in comment %}
+          <div class="card mb-4">
+            <div class="card-body">
+              <p>{{i.text}}</p>
+
+              <div class="d-flex justify-content-between">
+                <div class="d-flex flex-row align-items-center">
+                  <p class="small mb-0 ms-2">author:{{i.author}}
+
+                    {% for c in company %}
+
+                    {% if i.author == c.user %}
+                    / <strong>from<span class="text-danger"> {{c.company_name}} </span>Company</strong>
+                    {% endif %}
+
+                    {% endfor %}
+
+
+
+                  </p>
+
+                </div>
+
+              </div>
+            </div>
+          </div>
+          {%empty%}
+          no comments yet
+          {% endfor %}
+        </div>
+
+
+
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content %}

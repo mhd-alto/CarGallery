@@ -1,0 +1,99 @@
+{% extends 'manage/manage_layout.html' %}
+{% load static %}
+{% block title %}
+  Your Company 
+{% endblock title %}
+
+
+
+{% block content %}
+
+<main id="main">
+
+  <!-- ======= Breadcrumbs ======= -->
+  <section id="breadcrumbs" class="breadcrumbs">
+    <div class="container">
+
+      <ol>
+        <li><a href="index.html">Home</a></li>
+        <li>Portfolio Details</li>
+      </ol>
+      <h2>Portfolio Details</h2>
+
+    </div>
+  </section><!-- End Breadcrumbs -->
+
+  <!-- ======= Portfolio Details Section ======= -->
+  <section id="portfolio-details" class="portfolio-details">
+    <div class="container">
+
+      <form method="post" enctype="multipart/form-data">
+          {% csrf_token %}
+          <div class="row">
+              <div class="col">
+                  {{form.company_name.label}}
+              {{form.company_name}}
+              <div class="text-danger">
+                  {{form.company_name.errors}}
+              </div>
+              </div>
+              <div class="col">
+                  {{form.adderss.label}}
+                  {{form.adderss}}
+                  <div class="text-danger">
+                      {{form.adderss.errors}}
+                  </div></div>
+          </div>
+          <div class="row">
+              <div class="col">
+                  {{form.company_phonenumber.label}}
+                  {{form.company_phonenumber}}
+                  <div class="text-danger">
+                      {{form.company_phonenumber.errors}}
+                  </div>
+              </div>
+              <div class="col">
+                {{form.statement.label}}
+                <a href="{{company.statement.url}}">{{company.statement.url}}</a>
+                  {{form.statement}}
+                  <div class="text-danger">
+                      {{form.statement.errors}}
+                  </div>
+                  
+              </div>
+          </div>
+          {{form.payment_note_image.label}}
+          <a href="{{company.payment_note_image.url}}">{{company.payment_note_image.url}}</a>
+          {{form.payment_note_image}}
+          <div class="text-danger">
+              {{form.payment_note_image.errors}}
+          </div>
+          {{form.company_services.label}}
+          {{form.company_services}}
+          <div class="text-danger">
+              {{form.company_services.errors}}
+          </div>
+          {{form.company_logo.label}}
+          <a href="{{company.company_logo.url}}">{{company.company_logo.url}}</a>
+          {{form.company_logo}}
+          <div class="text-danger">
+              {{form.company_logo.errors}}
+          </div>
+          {% if company_to_edite.can_activate == True %}
+          {{form.is_active.label}}
+          {{form.is_active}}
+          <div class="text-danger">
+              {{form.is_active.errors}}
+          </div>
+          {% endif %}
+          <center><button type="submit" class="btn btn-outline-primary mt-3">SEND</button></center>
+      </form>        
+
+    </div>
+  </section><!-- End Portfolio Details Section -->
+
+</main><!-- End #main -->
+
+
+{% endblock content %}
+  

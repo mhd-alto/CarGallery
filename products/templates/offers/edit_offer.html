@@ -1,0 +1,66 @@
+{% extends 'manage/manage_layout.html' %}
+{% load static %}
+
+{% block title %}
+    edit offer
+{% endblock title %}
+    
+
+{% block content %}
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="row">
+            {{form.title.label}}:
+        {{form.title}}
+        {{form.title.errors}}
+        </div>
+        <div class="row">
+            {{form.description.label}}:
+        {{form.description}}
+        {{form.description.errors}}
+        </div>
+        <div>
+            {{form.price.label}}:
+        {{form.price}}
+        {{form.prcie.errors}}
+        </div>
+        <div class="row">
+            {{form.image.label}}:
+            <a href="{{offer.image.url}}">
+            {{offer.image.url}}
+
+            </a>
+        {{form.image}}
+        {{form.image.errors}}
+        </div>
+        <button type="submit" class="btn btn-primary m-2 ">save</button>
+
+        <button type="button" class="btn btn-danger" data-bs-toggle="modal"
+            data-bs-target="#exampleModal">
+            Delete
+          </button>
+    </form>
+  
+    
+  
+      <!-- delete Confermation -->
+      <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="exampleModalLabel">Deleteing</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <pre class="blockquote text-center font-monospace">Do you Want to delete This offer !!?</pre>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <a href="{% url 'deleteOffer' offer.id %}" class="btn btn-danger"><strong>Delete</strong></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+{% endblock content %}
+    

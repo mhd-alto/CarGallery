@@ -1,0 +1,61 @@
+{% extends 'products_layout.html' %}
+{% load static %}
+
+{% block title %}
+companies
+{% endblock title %}
+    
+
+{% block content %}
+<section id="portfolio" class="portfolio">
+    <div class="container">
+
+        <section id="breadcrumbs" class="breadcrumbs">
+            <div class="container">
+      
+              <ol>
+                <li><a href="{% url 'index' %}">Home</a></li>
+                <li>Companeis</li>
+              </ol>
+              <h2>Companeis</h2>
+      
+            </div>
+          </section>
+      <div class="section-title">
+        <span>Portfolio</span>
+        <h2>Companeis</h2>
+      </div>
+
+
+      <div class="row portfolio-container" data-aos="fade-up" data-aos-delay="150">
+
+        {% for car in companeis %}
+        <div class="col-lg-4 col-md-6 portfolio-item filter-app">
+          <img src="{{car.main_image.url}}" class="img-fluid" alt="">
+          <div class="portfolio-info">
+            
+            <a href="{% url 'car_details' car.id %}">
+              <h4>{{car.title}}</h4>
+              {% for i in companies %}
+                  
+                  {% if i.user == car.author %}
+                  <p class="text-secondry">{{i.company_name}}</p>
+                  {% endif %}
+                      
+              {% endfor %}
+                  
+            
+            </a>
+          </div>
+        </div>
+        {% endfor %}
+            
+
+
+      </div>
+
+    </div>
+  </section>
+
+{% endblock content %}
+    

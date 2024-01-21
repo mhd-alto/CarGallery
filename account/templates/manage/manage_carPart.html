@@ -1,0 +1,74 @@
+{% extends 'manage/manage_layout.html' %}
+{% load static %}
+
+{% block title %}
+CarParts    
+{% endblock title %}
+    
+
+{% block content %}
+<section id="portfolio" class="portfolio">
+    <div class="container">
+
+        <section id="breadcrumbs" class="breadcrumbs">
+            <div class="container">
+      
+              <ol>
+                <li><a href="{% url 'index' %}">Home</a></li>
+                <li>Car Parts</li>
+              </ol>
+              <h2>Cars Parts</h2>
+      
+            </div>
+          </section>
+          <form action="" method="post">
+            {% csrf_token %}
+            <div class="input-group">
+              <span class="m-1 w-50 mx-auto">{{carPartFilter.form.search}}</span>
+              <span class="m-1">
+              {{carPartFilter.form.price}}
+
+              </span>
+              <input type="submit" class="btn btn-primary" value="&#128269">
+
+            </div>
+            <!-- <div class="input-group">
+              <div class="">
+                <input type="text" class="form-control" name="search">
+              </div>
+              
+            </div> -->
+            </form>
+      <div class="section-title">
+        <span>Car Parts</span>
+        <h2>Car Parts</h2>
+        <p>your of Car Parts </p>
+        <a href="{% url 'add_carPart' %}">
+          <button class="btn btn-outline-danger ">Add CarPart</button>
+          </a>
+      </div>
+
+
+      <div class="row portfolio-container" data-aos="fade-up" data-aos-delay="150">
+
+        {% for carPart in carParts %}
+        <div class="col-lg-4 col-md-6 portfolio-item filter-app">
+          <img src="{{carPart.image.url}}" class="img-fluid" alt="">
+          <div class="portfolio-info">            
+              <h4>{{carPart.title}}</h4>
+              <a href="{% url 'editPart_car' carPart.id %}"><span class="float-end text-danger">edit</span></a>
+                  <p class="text-secondry">{{carPart.author}}</p>
+                      
+          </div>
+        </div>
+        {% endfor %}
+            
+
+
+      </div>
+
+    </div>
+  </section>
+
+{% endblock content %}
+    

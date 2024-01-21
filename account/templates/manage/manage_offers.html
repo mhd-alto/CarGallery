@@ -1,0 +1,76 @@
+{% extends 'manage/manage_layout.html' %}
+
+{% load static %}
+
+{% block title %}
+offers    
+{% endblock title %}
+    
+
+{% block content %}
+<section id="portfolio" class="portfolio">
+    <div class="container">
+
+        <section id="breadcrumbs" class="breadcrumbs">
+            <div class="container">
+      
+              <ol>
+                <li><a href="{% url 'editCompany' %}">Home</a></li>
+                <li>offers</li>
+              </ol>
+              <h2>offers</h2>
+      
+            </div>
+          </section>
+          <form action="" method="post">
+            {% csrf_token %}
+            <div class="input-group">
+              <span class="m-1 w-50 mx-auto">{{offersFilter.form.search}}</span>
+              <span class="m-1">
+              {{offersFilter.form.price}}
+
+              </span>
+              <input type="submit" class="btn btn-primary" value="&#128269">
+
+            </div>
+            <!-- <div class="input-group">
+              <div class="">
+                <input type="text" class="form-control" name="search">
+              </div>
+              
+            </div> -->
+            </form>
+      <div class="section-title">
+        <span>Offers</span>
+        <h2>offers</h2>
+        <p> your company type of offers </p>
+        <a href="{% url 'add_offer' %}">
+          <button class="btn btn-outline-danger ">Add Offer</button>
+          </a>
+      </div>
+
+
+      <div class="row portfolio-container" data-aos="fade-up" data-aos-delay="150">
+
+        {% for offer in offers %}
+        <div class="col-lg-4 col-md-6 portfolio-item filter-app">
+          <img src="{{offer.image.url}}" class="img-fluid" alt="">
+          <div class="portfolio-info">
+            
+              <h4>{{offer.title}}</h4>    
+              <p class="text-secondry">{{offer.author}}</p>
+              <a href="{% url 'edit_offer' offer.id %}"><span class="float-end">edit</span></a>
+                  
+          </div>
+        </div>
+        {% endfor %}
+            
+
+
+      </div>
+
+    </div>
+  </section>
+
+{% endblock content %}
+    
